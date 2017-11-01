@@ -5,7 +5,9 @@
 
 
 >It is very easy to run. You just require latest node-js installed on your machine 
-###Steps
+
+
+### Steps
 
 1. Clone project using git clone
 1. Register new OIDC client in you gluu server with redirect uri _http://localhost:3000/profile_ and copy clientID and secrete.
