@@ -78,7 +78,7 @@ app.get('/login', function (req, res) {
             redirect_uri: ['http://localhost:3000/profile/'],
             state: new Buffer(JSON.stringify(providerJson)).toString('base64'),
             nonce: randomString(10),
-            acr_values: 'passportsaml'
+            acr_values: 'passport'
         }
     });
     //nonce=789927701&acr_values=passportsaml  eyJwcm92aWRlciI6ImlkcDEifQ==
@@ -180,3 +180,4 @@ var getuserclaims = function getUserClaims(Outhclient, code) {
         });
 }
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+options = Object
