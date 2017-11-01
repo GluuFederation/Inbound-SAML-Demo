@@ -1,0 +1,8 @@
+{
+  "clientId": "@!5C0B.B148.7E63.326C!0001!562E.F01E!0008!664D.7760.0EC3.762D",
+  "clientSecret": "ldapsu",
+  "host": "gluu.evp.org",
+  "scopes": [
+    "openid","profile"
+  ]
+}

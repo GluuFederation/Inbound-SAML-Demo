@@ -1,0 +1,50 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+    <title>Node Authentication</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            padding-top: 80px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="page-header text-center">
+        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
+        <!--<a href="/logout" class="btn btn-default btn-sm">Logout</a>-->
+    </div>
+    <div class="row">
+
+        <div class="col-sm-12">
+
+            <!-- OPENIDCONNECT INFORMATION -->
+            <div class="well">
+                <h3 class="text-warning"><span class="fa fa-openid"></span> OpenID Connect</h3>
+
+                <!-- check if the user has this token (is the user authenticated ) -->
+                <% if (user) { %>
+                <p>
+                    <img src=<%= user.picture %>><br>
+                    <strong>id</strong>: <%= user.sub %><br>
+                    <strong>Email</strong>: <%= user.email %><br>
+                    <strong>displayName</strong>: <%= user.given_name %><br>
+                    <strong>userName</strong>: <%= user.user_name %><br>
+                    <strong>Website</strong>: <%= user.website %><br>
+
+                </p>
+                <% } %>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!-- views/index.ejs -->
+<!doctype html>
+<html>
+<head>
+    <title>Node Authentication Client</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- load fontawesome -->
+    <style>
+        body {
+            padding-top: 80px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="jumbotron text-center">
+        <h1><span class="fa fa-lock"></span> Node Authentication Client</h1>
+
+
+        <!--<a href="/login?issuer=erasmus" class="btn btn-default"><span class="fa fa-user"></span>erasmus</a>-->
+
+
+        <%  Object.keys(idps).forEach(function (key) { %>
+        <a href="/login?provider=<%= key %>" class="btn btn-default"><span class="fa fa-user"></span> <%= key %></a>
+
+        <% }) %>
+
+    </div>
+
+</div>
+</body>
+</html>
