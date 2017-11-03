@@ -1,4 +1,4 @@
-# proxy-client
+# Proxy-client
 
 
 * Proxy-client is the demo application in node.js to test [**Passport Inbound SSO**](https://github.com/GluuFederation/gluu-passport/wiki/Passport-Inbound-SSO) 
