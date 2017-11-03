@@ -1,4 +1,3 @@
-
 var FacebookStrategy = require('./facebook');
 var GitHubStrategy = require('./github');
 var GoogleStrategy = require('./google');

@@ -1,5 +1,5 @@
 {
-  "idp1" : {"entryPoint": "https://arvind1.gluu.org/idp/profile/SAML2/POST/SSO",
+  "idp1" : {"entryPoint": "https://arvind2.gluu.org/idp/profile/SAML2/POST/SSO",
     "issuer": "urn:test:example",
     "identifierFormat": "urn:oasis:names:tc:SAML:2.0:nameid-format:transient",
     "authnRequestBinding": "HTTP-POST",

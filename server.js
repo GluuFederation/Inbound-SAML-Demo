@@ -81,7 +81,6 @@ app.get('/login', function (req, res) {
             acr_values: 'passport'
         }
     });
-    //nonce=789927701&acr_values=passportsaml  eyJwcm92aWRlciI6ImlkcDEifQ==
 
 
     res.writeHead(302, {'Location': url});
@@ -95,7 +94,7 @@ var proxy = require('http-proxy').createProxyServer({
 });
 
 app.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
+    console.log('Demo app listening on port 3000!');
 });
 
 
