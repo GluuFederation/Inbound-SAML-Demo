@@ -23,6 +23,8 @@ def run(args, cwd=None, env=None, usewait=False):
         print ("Error running command : %s" % " ".join(args), True)
 
 
+print ("make sure you are running from gluu-server's chroot....")
+
 if not os.path.exists(os.path.join(passportpath, "idp-metadata")):
     os.makedirs(os.path.join(passportpath, "idp-metadata"))
 
@@ -39,14 +41,14 @@ shutil.copyfile("saml.js", os.path.join(passportpath, 'auth', 'saml.js'))
 shutil.copyfile("index.js", os.path.join(passportpath, 'routes', 'index.js'))
 shutil.copyfile("passport-saml-config.json", os.path.join(configfilePath, 'passport-saml-config.json'))
 
-run(['npm', 'install', 'passport-saml', '--save'], os.path.join('/opt', 'gluu', 'node', 'passport'),os.environ.copy(), True)
+nodeEnv = os.environ.copy()
+nodeEnv['PATH'] = '%s/bin:' % '/opt/node' + nodeEnv['PATH']
+run(['npm', 'install', 'passport-saml', '--save'], os.path.join('/opt', 'gluu', 'node', 'passport'),nodeEnv, True)
+run(['npm', 'install', '-P'], os.path.join('/opt', 'gluu', 'node', 'passport'), nodeEnv, True)
 
-print ("setup done please restart oxAuth server and passport server with commands in side gluu-server's chroot ")
-print ("\n service gluu-server-3.1.1 login  //to login inside gluu server's chroot")
+print ("setup done please restart oxAuth server and passport server with commands")
 print ("\n service oxauth stop")
 print ("\n service oxauth start")
 print ("\n service passport stop")
 print ("\n service passport start")
-
-# run(['cd', os.path.join('opt', 'gluu', 'node', 'passport')], os.environ.copy(), True)
 

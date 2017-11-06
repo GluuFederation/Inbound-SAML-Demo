@@ -66,6 +66,7 @@ app.get('/profiledetail', function (req, res) {
 app.get('/login', function (req, res) {
     var prov = req.query.provider;
     providerJson = {
+        salt : randomCharString(5),
         provider: prov
     };
     var url = buildUrl('https://' + global.client.host, {
@@ -77,7 +78,7 @@ app.get('/login', function (req, res) {
             scope: ['openid+profile+email+user_name'],
             redirect_uri: ['http://localhost:3000/profile/'],
             state: new Buffer(JSON.stringify(providerJson)).toString('base64'),
-            nonce: randomString(10),
+            nonce: randomNumberString(10),
             acr_values: 'passport'
         }
     });
@@ -98,7 +99,7 @@ app.listen(3000, function () {
 });
 
 
-var randomString = function (length) {
+var randomNumberString = function (length) {
     var text = "";
     var possible = "0123456789";
     for (var i = 0; i < length; i++) {
@@ -107,6 +108,15 @@ var randomString = function (length) {
     return text;
 }
 
+
+var randomCharString = function (length) {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYYZabcdefghijklmnopqrstuvwxyyz0123456789";
+    for (var i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+}
 var getuserclaims = function getUserClaims(Outhclient, code) {
     let authToken = new Buffer(Outhclient.clientId + ':' + Outhclient.clientSecret).toString('base64');
     let tokenRequestOptions = {
