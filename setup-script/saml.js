@@ -1,4 +1,4 @@
-﻿var passport = require('passport');
+﻿﻿var passport = require('passport');
 var SamlStrategy = require('passport-saml').Strategy;
 var SAML = require('passport-saml').SAML;
 var fs = require('fs');
@@ -26,7 +26,7 @@ var setCredentials = function () {
             strategyConfigOptions.cert = objectJSON['cert'];
         }
         else {
-            logger.info('"cert"  is not present so' + key + " will not work");
+            logger.info('"cert"  is not present so' + key + " will not work" +objectJSON);
             return
         }
         if (objectJSON.hasOwnProperty('skipRequestCompression')) {
@@ -69,7 +69,7 @@ var setCredentials = function () {
         fs.truncate(path.join(idpMetaPath, key + '.xml'), 0, function (err) {
 
         });
-        var decryptionCert = fs.readFileSync('/opt/gluu-server-3.1.1//etc/certs/openldap.crt', 'utf-8');
+        var decryptionCert = fs.readFileSync('/opt/gluu-server-3.1.1/etc/certs/openldap.crt', 'utf-8');
 
         var metaData = strategy.generateServiceProviderMetadata(decryptionCert);
         logger.info(metaData);
