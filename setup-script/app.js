@@ -11,9 +11,8 @@ var jwt = require('jsonwebtoken');
 var fs = require('fs');
 var uuid = require('uuid');
 
-global.config = require('../passport-config.json');
-global.saml_config = require('../passport-saml-config.json');
-
+global.config = require('/etc/gluu/conf/passport-config.json');
+global.saml_config = require('/etc/gluu/conf/passport-saml-config.json');
 var getConsumerDetails = require('./auth/getConsumerDetails');
 var logger = require("./utils/logger");
 
@@ -115,4 +114,3 @@ var listener = server.createServer(app).listen(global.config.serverWebPort, getC
         logger.sendMQMessage('info: Server listening on http://localhost:' + global.config.serverWebPort);
     }
 }));
-
