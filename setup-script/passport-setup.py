@@ -45,6 +45,8 @@ nodeEnv = os.environ.copy()
 nodeEnv['PATH'] = '%s/bin:' % '/opt/node' + nodeEnv['PATH']
 run(['npm', 'install', 'passport-saml', '--save'], os.path.join('/opt', 'gluu', 'node', 'passport'),nodeEnv, True)
 run(['npm', 'install', '-P'], os.path.join('/opt', 'gluu', 'node', 'passport'), nodeEnv, True)
+run(['chmod', '777', '-R'], os.path.join('/opt', 'gluu', 'node', 'passport'), os.environ.copy(), True)
+
 
 print ("setup done please restart oxAuth server and passport server with commands")
 print ("\n service oxauth stop")

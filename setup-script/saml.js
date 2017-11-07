@@ -3,46 +3,54 @@ var SamlStrategy = require('passport-saml').Strategy;
 var SAML = require('passport-saml').SAML;
 var fs = require('fs');
 var logger = require("../utils/logger");
+var path = require('path');
 
-var setCredentials = function() {
+var setCredentials = function () {
     var entitiesJSON = global.saml_config;
-    for(key in entitiesJSON){
+    for (key in entitiesJSON) {
 
         logger.info(key);
         var objectJSON = entitiesJSON[key];
         var strategyConfigOptions = {};
-        strategyConfigOptions.callbackUrl = global.applicationHost.concat("/passport/auth/saml/"+key+"/callback");
-        if(objectJSON.hasOwnProperty('entryPoint')) {
+        strategyConfigOptions.callbackUrl = global.applicationHost.concat("/passport/auth/saml/" + key + "/callback");
+        if (objectJSON.hasOwnProperty('entryPoint')) {
             strategyConfigOptions.entryPoint = objectJSON['entryPoint'];
         }
-        if(objectJSON.hasOwnProperty('issuer')) {
+        if (objectJSON.hasOwnProperty('issuer')) {
             strategyConfigOptions.issuer = objectJSON['issuer'];
         }
-        if(objectJSON.hasOwnProperty('identifierFormat')) {
+        if (objectJSON.hasOwnProperty('identifierFormat')) {
             strategyConfigOptions.identifierFormat = objectJSON['identifierFormat'];
         }
-        if(objectJSON.hasOwnProperty('cert')) {
+        if (objectJSON.hasOwnProperty('cert')) {
             strategyConfigOptions.cert = objectJSON['cert'];
         }
-        if(objectJSON.hasOwnProperty('skipRequestCompression')) {
+        else {
+            logger.info('"cert"  is not present so' + key + " will not work");
+            return
+        }
+        if (objectJSON.hasOwnProperty('skipRequestCompression')) {
             strategyConfigOptions.skipRequestCompression = objectJSON['skipRequestCompression'];
         }
-        if(objectJSON.hasOwnProperty('authnRequestBinding')) {
+        if (objectJSON.hasOwnProperty('authnRequestBinding')) {
             strategyConfigOptions.authnRequestBinding = objectJSON['authnRequestBinding'];
         }
-        if(objectJSON.hasOwnProperty('additionalAuthorizeParams')) {
+        if (objectJSON.hasOwnProperty('additionalAuthorizeParams')) {
             strategyConfigOptions.additionalAuthorizeParams = objectJSON['additionalAuthorizeParams'];
         }
-        strategyConfigOptions.decryptionPvk = fs.readFileSync('/etc/certs/openldap.key', 'utf-8');
+        strategyConfigOptions.decryptionPvk = fs.readFileSync('/opt/gluu-server-3.1.1//etc/certs/openldap.key', 'utf-8');
         strategyConfigOptions.passReqToCallback = true;
+        strategyConfigOptions.validateInResponseTo = true;
+
         var strategy = new SamlStrategy(strategyConfigOptions,
-            function(req, profile, done) {
-                var mapping = objectJSON['reverseMapping'];
+            function (req, profile, done) {
+                var idp = req.originalUrl.replace("/passport/auth/saml/","").replace("/callback","");
+                var mapping =global.saml_config[idp].reverseMapping;
                 logger.info(req.body.SAMLResponse);
                 var userProfile = {
-                    id:  profile[mapping["id"]]|| '',
-                    name: profile[mapping["name"]] ||'',
-                    username:  profile[mapping["username"]] || '',
+                    id: profile[mapping["id"]] || '',
+                    name: profile[mapping["name"]] || '',
+                    username: profile[mapping["username"]] || '',
                     email: profile[mapping["email"]],
                     givenName: profile[mapping["givenName"]] || '',
                     familyName: profile[mapping["familyName"]] || '',
@@ -51,18 +59,28 @@ var setCredentials = function() {
                 };
                 return done(null, userProfile);
             });
-        passport.use(key,strategy);
-        logger.info(key);
-        if (!fs.existsSync(__dirname + '/../idp-metadata/')){
-            fs.mkdirSync(__dirname + '/../idp-metadata/');
+        passport.use(key, strategy);
+
+        var idpMetaPath = path.join(__dirname, '..', 'idp-metadata');
+        if (!fs.existsSync(idpMetaPath)) {
+            fs.mkdirSync(idpMetaPath);
         }
-        fs.truncate(__dirname + '/../idp-metadata/' + key +'.xml', 0, function() {
+
+        fs.truncate(path.join(idpMetaPath, key + '.xml'), 0, function (err) {
+
         });
-        var decryptionCert = fs.readFileSync('/etc/certs/openldap.crt', 'utf-8');
+        var decryptionCert = fs.readFileSync('/opt/gluu-server-3.1.1//etc/certs/openldap.crt', 'utf-8');
+
         var metaData = strategy.generateServiceProviderMetadata(decryptionCert);
-        fs.writeFile(__dirname + '/../idp-metadata/'+key +'.xml', metaData, function(err) {
-            console.log("Data written successfully for "+key);
-        });
+        logger.info(metaData);
+
+        fs.writeFile(path.join(idpMetaPath, key + '.xml'), metaData, function (err) {
+            if (err) {
+                logger.info("failed to save" + path.join(idpMetaPath, key + '.xml'));
+            } else {
+                logger.info("succeeded in saving" + path.join(idpMetaPath, key + '.xml'));
+            }
+        })
     }
 };
 
