@@ -1,7 +1,7 @@
 {
-  "clientId": "@!5AD0.8E9E.DBB8.2637!0001!2CB7.3597!0008!7FFF.6890.6AA4.4F3F",
+  "clientId": "@!C245.F093.8C84.1047!0001!A255.52DA!0008!9877.11BA.F5CF.0DC4",
   "clientSecret": "ldapsu",
-  "host": "gluu.evp.org",
+  "host": "arvind2.gluu.org",
   "scopes": [
     "openid","profile"
   ]
