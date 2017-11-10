@@ -1,8 +1,5 @@
 {
-  "clientId": "@!C245.F093.8C84.1047!0001!A255.52DA!0008!9877.11BA.F5CF.0DC4",
-  "clientSecret": "ldapsu",
-  "host": "arvind2.gluu.org",
-  "scopes": [
-    "openid","profile"
-  ]
+  "clientId": "your_OIDC_clientid",
+  "clientSecret": "your_OIDC_client_secret",
+  "host": "you_gluu_server_hostname"
 }
