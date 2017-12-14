@@ -35,6 +35,7 @@ if not os.path.exists(oxAuthCustomPagePassport):
     os.makedirs(oxAuthCustomPagePassport)
 
 shutil.copyfile("passportpostlogin.xhtml", os.path.join(oxAuthCustomPagePassport, 'passportpostlogin.xhtml'))
+shutil.copyfile("passportlogin.xhtml", os.path.join(oxAuthCustomPagePassport, 'passportlogin.xhtml'))
 shutil.copyfile("app.js", os.path.join(passportpath, 'app.js'))
 shutil.copyfile("configureStrategies.js", os.path.join(passportpath, 'auth', 'configureStrategies.js'))
 shutil.copyfile("saml.js", os.path.join(passportpath, 'auth', 'saml.js'))

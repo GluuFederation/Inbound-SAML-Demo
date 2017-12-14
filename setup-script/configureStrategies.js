@@ -8,9 +8,11 @@ var YahooStrategy = require('./yahoo');
 var SamlStrategy = require("./saml");
 var logger = require("../utils/logger");
 
+global.getpassportStrategies = null;
+
 exports.setConfiguratins = function(data){
     SamlStrategy.setCredentials();
-
+    getpassportStrategies = data.passportStrategies;
     if (data && data.passportStrategies) {
 
         //FacebookStrategy
@@ -71,4 +73,4 @@ exports.setConfiguratins = function(data){
         logger.log('error', 'Error in getting data, error: ' + JSON.stringify(err));
         logger.sendMQMessage('error: Error in getting data, error: ' + JSON.stringify(err));
     }
-};﻿
+};
