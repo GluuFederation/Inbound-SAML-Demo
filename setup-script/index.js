@@ -170,7 +170,7 @@ router.get('/auth/dropbox/:token',
 var entitiesJSON = global.saml_config;
 for (key in entitiesJSON) {
 
-    if (entitiesJSON[key].cert && entitiesJSON[key].cert.length > 5) {
+    if (entitiesJSON[key].cert && entitiesJSON[key].cert.length > 5 && entitiesJSON[key].enable.match("true")) {
         router.post('/auth/saml/' + key + '/callback',
             passportSAML.authenticate(key, {
                 failureRedirect: '/passport/login'
@@ -201,6 +201,7 @@ router.get("/saml_config",function(req,res){
     const res_str = JSON.stringify(global.saml_config);
     var tmp = JSON.parse(res_str);
     for(v in tmp){
+
         tmp[v].entryPoint = "";
         tmp[v].issuer = "";
         tmp[v].identifierFormat = "";
@@ -247,3 +248,4 @@ router.all('/*', function (req, res, next) {
 });
 
 module.exports = router;
+
