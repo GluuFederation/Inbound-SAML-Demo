@@ -43,7 +43,7 @@ app.get('/profile', function (req, res) {
         accessTokenUri: 'https://' + global.client.host + '/oxauth/restv1/token',
         authorizationUri: 'https://' + global.client.host + '/oxauth/restv1/authorize',
         userInfoUri: 'https://' + global.client.host + '/oxauth/restv1/userinfo',
-        redirectUri: 'http://passport-saml-demo-app.gluu.org:3000/profile/',
+        redirectUri: 'http://passport-saml-demo-app.example.com:3000/profile/',
         scopes: ['openid', 'profile', 'email', 'user_name']
     };
     getuserclaims(Outhclient, req.query.code).then(function (userdata) {
@@ -76,7 +76,7 @@ app.get('/login', function (req, res) {
             response_type: ['code'],
             client_id: global.client.clientId,
             scope: ['openid+profile+email+user_name'],
-            redirect_uri: ['http://passport-saml-demo-app.gluu.org:3000/profile/'],
+            redirect_uri: ['http://passport-saml-demo-app.example.com:3000/profile/'],
             state: new Buffer(JSON.stringify(providerJson)).toString('base64'),
             nonce: randomNumberString(10),
             acr_values: 'passport' // In Gluu 3.1.1 : acr_value is passport and In Gluu 3.1.2 : acr_value is passport_saml
