@@ -73,13 +73,13 @@ app.get('/login', function (req, res) {
         path: 'oxauth/authorize',
         queryParams: {
             response_mode: 'query',
-            response_type: ['code+id_token'],
+            response_type: ['code'],
             client_id: global.client.clientId,
             scope: ['openid+profile+email+user_name'],
             redirect_uri: ['http://passport-saml-demo-app.gluu.org:3000/profile/'],
             state: new Buffer(JSON.stringify(providerJson)).toString('base64'),
             nonce: randomNumberString(10),
-            acr_values: 'passport'
+            acr_values: 'passport' // In Gluu 3.1.1 : acr_value is passport and In Gluu 3.1.2 : acr_value is passport_saml
         }
     });
 
