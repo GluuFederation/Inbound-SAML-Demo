@@ -79,7 +79,7 @@ app.get('/login', function (req, res) {
             redirect_uri: ['http://passport-saml-demo-app.example.com:3000/profile/'],
             state: new Buffer(JSON.stringify(providerJson)).toString('base64'),
             nonce: randomNumberString(10),
-            acr_values: 'passport' // In Gluu 3.1.1 : acr_value is passport and In Gluu 3.1.2 : acr_value is passport_saml
+            acr_values: 'passport'
         }
     });
 
