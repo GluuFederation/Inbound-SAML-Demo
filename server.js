@@ -70,7 +70,7 @@ app.get('/login', function (req, res) {
         provider: prov
     };
     var url = buildUrl('https://' + global.client.host, {
-        path: 'oxauth/authorize',
+        path: 'oxauth/restv1/authorize',
         queryParams: {
             response_mode: 'query',
             response_type: ['code'],
