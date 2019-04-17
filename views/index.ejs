@@ -23,9 +23,8 @@
         <!--<a href="/login?issuer=erasmus" class="btn btn-default"><span class="fa fa-user"></span>erasmus</a>-->
 
 
-        <%  Object.keys(idps).forEach(function (key) { %>
+        <%  idps.forEach(function (key) { %>
         <a href="/login?provider=<%= key %>" class="btn btn-default"><span class="fa fa-user"></span> <%= key %></a>
-
         <% }) %>
 
     </div>
