@@ -4,14 +4,14 @@ var fs = require('fs');
 const {URL} = require('url');
 var request = require('request-promise');
 
-global.config = require('./passport-saml-config.json');
+let idps = []
 global.client = require('./client-config.json');
 
 var buildUrl = require('build-url');
 
 var bodyParser = require('body-parser');
 var user;
-// var redis = require("redis"), client = redis.createClient();
+
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -22,7 +22,7 @@ app.set('view engine', 'ejs');
 //routes
 app.get('/', function (req, res) {
     res.render('index.ejs', {
-        idps: (global.config)
+        idps: idps
     });
 });
 
@@ -30,13 +30,7 @@ const querystring = require('querystring');
 
 
 app.get('/profile', function (req, res) {
-    // req.queryParams;
-    // dataJson = {
-    //     client_id: '@!5C0B.B148.7E63.326C!0001!562E.F01E!0008!664D.7760.0EC3.762D',
-    //     client_secret: 'ldapsu',
-    //     code: req.query.code,
-    //     redirect_uri: "http://localhost:3000/profile"
-    // };
+
     var Outhclient = {
         clientId: global.client.clientId,
         clientSecret: global.client.clientSecret,
@@ -190,4 +184,3 @@ var getuserclaims = function getUserClaims(Outhclient, code) {
         });
 }
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-options = Object
