@@ -60,9 +60,11 @@ app.get('/profiledetail', function (req, res) {
 app.get('/login', function (req, res) {
     var prov = req.query.provider;
     providerJson = {
-        salt : randomCharString(5),
+        salt: randomCharString(5),
         provider: prov
     };
+    providerJson = new Buffer(JSON.stringify(providerJson)).toString('base64').split('=')[0]
+
     var url = buildUrl('https://' + global.client.host, {
         path: 'oxauth/restv1/authorize',
         queryParams: {
@@ -71,7 +73,7 @@ app.get('/login', function (req, res) {
             client_id: global.client.clientId,
             scope: ['openid+profile+email+user_name'],
             redirect_uri: ['http://passport-saml-demo-app.example.com:3000/profile/'],
-            preselectedExternalProvider: new Buffer(JSON.stringify(providerJson)).toString('base64'),
+            preselectedExternalProvider: providerJson,
             state: randomNumberString(10),
             nonce: randomNumberString(10),
             acr_values: 'passport_saml'
